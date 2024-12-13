@@ -1,0 +1,30 @@
+body, html {
+    background-color:#cff5d3;
+}
+
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Styling untuk tombol */
+.btn-primary {
+    background-color: #549565;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; 
+}
+
+.btn-primary:hover {
+    background-color: #3c6848;
+}
+
+.btn-primary:active {
+    background-color: #2b5f41 !important;
+}

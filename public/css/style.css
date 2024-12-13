@@ -1,0 +1,130 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color:#ecfaee;
+    color: #343a40;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #3c6848;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #549565;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; 
+}
+
+.btn-primary:hover {
+    background-color: #3c6848;
+}
+
+.btn-primary:active {
+    background-color: #2b5f41 !important;
+}
+
+footer {
+    font-size: 0.9rem;
+    background-color: #f1f1f1;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Todo Card Styles */
+.todo-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.todo-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.todo-card .card-title {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.todo-card .card-title.completed {
+    text-decoration: line-through;
+    color: #6c757d;
+}
+
+.todo-card .btn {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.todo-card .btn-success:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.todo-card .btn-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Button Styles */
+button {
+    border-radius: 5px;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    background-color: #3c6848;
+    color: #fff;
+    border-bottom: none;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+}
+
+.modal-body {
+    font-size: 1rem;
+}
+
+/* Input Styles */
+input[type="text"] {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 0.5rem 1rem;
+}
+
+input[type="text"]:focus {
+    border-color: #549565;
+    box-shadow: 0 0 5px #3c6848;
+}
+
+/* Add Todo Button */
+#addModal .btn-primary {
+    background-color: #549565;
+    border-color: #3c6848;
+}
+
+#addModal .btn-primary:hover {
+    background-color: #3c6848;
+    border-color: #004085;
+}

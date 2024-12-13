@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="/css/login.css">
+
+<form action="/login" method="POST"><div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="form-card border shadow p-4 rounded">
+    <div class="mb-3">
+
+        <img src="/images/gambar.jpg" alt="Logo" style="width: 200px; height: auto;">
+<h1>Login</h1>
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+<p>Belum punya akun? <a href="/signup">Daftar di sini</a>.</p>

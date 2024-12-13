@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="/css/style.css">
+
+<div class="container mt-5">
+    <h1 class="text-center">List Pesanan</h1>
+
+    <!-- Add Todo Button -->
+    <div class="text-center my-4">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Tambahkan Pesanan</button>
+    </div>
+
+    <!-- List of Todos -->
+    <div id="todoList" class="row">
+        <% todos.forEach(todo => { %>
+        <div class="col-md-4 mb-4">
+            <div class="card todo-card shadow-sm" style="transition: transform 0.3s;">
+                <div class="card-body">
+                    <h5 class="card-title <%= todo.completed ? 'completed' : '' %>">
+                        <%= todo.task %>
+                    </h5>
+                    <div class="d-flex justify-content-between mt-3">
+                        <button class="btn btn-sm btn-success editBtn" data-id="<%= todo.id %>">Edit</button>
+                        <button class="btn btn-sm btn-danger deleteBtn" data-id="<%= todo.id %>">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+
+    <!-- Add Todo Modal -->
+    <div id="addModal" class="modal fade" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Tambahkan Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTodoForm">
+                        <div class="form-group">
+                            <label for="newTask">Task</label>
+                            <input type="text" id="newTask" class="form-control" placeholder="Enter task" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Add Task</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Todo Modal -->
+    <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTodoForm">
+                        <div class="form-group">
+                            <label for="editTask">Task</label>
+                            <input type="text" id="editTask" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center py-4 bg-light mt-5">
+    <p class="mb-0">© 2024 My Todo List. All rights reserved.</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Add new todo
+        $('#addTodoForm').on('submit', function (e) {
+            e.preventDefault();
+            const task = $('#newTask').val().trim();
+            if (task) {
+                $.ajax({
+                    url: '/todos',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ task: task }),
+                    success: function (newTodo) {
+                        $('#addModal').modal('hide');
+                        $('#newTask').val('');
+                        const card = `
+                            <div class="col-md-4 mb-4">
+                                <div class="card todo-card shadow-sm" style="transition: transform 0.3s;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${newTodo.task}</h5>
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <button class="btn btn-sm btn-success editBtn" data-id="${newTodo.id}">Edit</button>
+                                            <button class="btn btn-sm btn-danger deleteBtn" data-id="${newTodo.id}">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        $('#todoList').append(card);
+                    }
+                });
+            }
+        });
+
+        // Edit todo
+        let editId;
+        $(document).on('click', '.editBtn', function () {
+            editId = $(this).data('id');
+            const currentTask = $(this).closest('.card').find('.card-title').text();
+            $('#editTask').val(currentTask);
+            $('#editModal').modal('show');
+        });
+
+        $('#editTodoForm').on('submit', function (e) {
+            e.preventDefault();
+            const task = $('#editTask').val().trim();
+            if (task) {
+                $.ajax({
+                    url: '/todos/' + editId,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ task: task }),
+                    success: function () {
+                        $('#editModal').modal('hide');
+                        location.reload();
+                    }
+                });
+            }
+        });
+
+        // Delete todo
+        $(document).on('click', '.deleteBtn', function () {
+            const id = $(this).data('id');
+            $.ajax({
+                url: '/todos/' + id,
+                type: 'DELETE',
+                success: function () {
+                    location.reload();
+                }
+            });
+        });
+
+        // Add hover effect for cards
+        $(document).on('mouseenter', '.todo-card', function () {
+            $(this).css('transform', 'scale(1.05)');
+        }).on('mouseleave', '.todo-card', function () {
+            $(this).css('transform', 'scale(1)');
+        });
+    });
+</script>
